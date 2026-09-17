@@ -1,0 +1,373 @@
+:root {
+  --bg: #eef1f5;
+  --surface: #ffffff;
+  --ink: #1b2430;
+  --ink-muted: #5b6675;
+  --accent: #45529a;
+  --accent-soft: #dce0f2;
+  --gold: #c79a4b;
+  --danger: #c1443b;
+  --danger-soft: #f3d9d6;
+  --border: #dadfe7;
+  --warn: #b8863b;
+  --warn-soft: #f2e6cf;
+}
+
+:root[data-theme="dark"] {
+  --bg: #14171f;
+  --surface: #1c2029;
+  --ink: #eef1f5;
+  --ink-muted: #9099ac;
+  --accent: #8992d6;
+  --accent-soft: #2a2f4a;
+  --gold: #d8b06a;
+  --danger: #e08078;
+  --danger-soft: #402424;
+  --border: #2c3140;
+  --warn: #dcb26b;
+  --warn-soft: #3a2f1c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 64px 24px;
+}
+
+.app {
+  width: 100%;
+  max-width: 560px;
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header h1 {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px 0;
+  color: var(--ink);
+}
+
+.header p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 15px;
+}
+
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.add-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 12px;
+  margin-bottom: 32px;
+  transition: border-color 0.2s ease;
+}
+
+.add-bar:focus-within {
+  border-color: var(--accent);
+}
+
+.add-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: "Inter", sans-serif;
+  font-size: 17px;
+  color: var(--ink);
+  padding: 4px 0;
+}
+
+.add-bar input::placeholder {
+  color: var(--ink-muted);
+}
+
+.add-bar button {
+  border: none;
+  background: var(--accent);
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.add-bar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.section-label {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.task-row-wrap {
+  position: relative;
+  list-style: none;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+.task-row-wrap:last-child {
+  border-bottom: none;
+}
+
+.swipe-backdrop {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 24px;
+  background: var(--danger);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.task-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0;
+  background: var(--bg);
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.drag-handle {
+  color: var(--ink-muted);
+  cursor: grab;
+  font-size: 14px;
+  padding: 4px;
+  flex-shrink: 0;
+  touch-action: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.task-row:hover .drag-handle {
+  opacity: 1;
+}
+
+.checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 0;
+}
+
+.checkbox.done {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+
+.task-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.task-title {
+  font-size: 16px;
+  cursor: text;
+  word-break: break-word;
+}
+
+.task-title.done {
+  color: var(--ink-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--ink-muted);
+}
+
+.task-edit-input {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid var(--accent);
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  padding: 0 0 2px 0;
+  width: 100%;
+}
+
+.task-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.due-badge {
+  border: none;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.due-badge.soon {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+.due-badge.overdue {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.tag-pill {
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  background: hsl(var(--tag-hue) 70% 92%);
+  color: hsl(var(--tag-hue) 45% 35%);
+}
+
+:root[data-theme="dark"] .tag-pill {
+  background: hsl(var(--tag-hue) 35% 22%);
+  color: hsl(var(--tag-hue) 70% 78%);
+}
+
+.tag-input,
+.date-input {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 6px;
+  background: var(--surface);
+  color: var(--ink);
+  outline: none;
+  width: 90px;
+}
+
+.meta-add-btn {
+  border: 1px dashed var(--border);
+  background: transparent;
+  color: var(--ink-muted);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.meta-add-btn:hover {
+  color: var(--ink);
+  border-color: var(--ink-muted);
+}
+
+.row-actions {
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  flex-shrink: 0;
+}
+
+.task-row:hover .row-actions {
+  opacity: 1;
+}
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--ink-muted);
+  font-size: 14px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  color: var(--ink);
+}
+
+.icon-btn.danger:hover {
+  color: var(--danger);
+}
+
+.empty-state {
+  color: var(--ink-muted);
+  font-size: 15px;
+  padding: 24px 0;
+  text-align: center;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+}
